@@ -4,195 +4,352 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIP - {{ planet.name }}</title>
-    <style>
-        :root {
-            --primary-color: #1a237e;
-            --secondary-color: #0d47a1;
-            --accent-color: #f5f5f5;
-            --text-color: #333;
-            --border-color: #ddd;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 2.5em;
-            text-transform: uppercase;
-        }
-        .aip-label {
-            background: var(--primary-color);
-            color: #fff;
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        section {
-            margin-bottom: 40px;
-        }
-        h2 {
-            background: var(--accent-color);
-            padding: 10px;
-            border-left: 5px solid var(--secondary-color);
-            color: var(--secondary-color);
-            text-transform: uppercase;
-            font-size: 1.2em;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        th {
-            width: 40%;
-            background-color: #fafafa;
-            color: #666;
-            font-weight: 600;
-        }
-        .footer {
-            margin-top: 50px;
-            font-size: 0.8em;
-            text-align: center;
-            color: #888;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-        .warning {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div>
-                <h1>{{ planet.name }}</h1>
-                <p>Interstellar Aeronautical Information Publication</p>
-            </div>
-            <div class="aip-label">AIP EXOPLANET</div>
-        </header>
+    <div class="dashboard-container">
+        <div class="aip-grid">
+            
+            <!-- HEADER PANEL -->
+            <header class="sci-fi-panel header-panel">
+                <div>
+                    <div class="label">Navigation Database / Aeronautical Publication</div>
+                    <h1 style="font-size: 2.5rem; margin-top: 5px;">{{ planet.name }}</h1>
+                </div>
+                <div style="text-align: right;">
+                    <div class="label">Report Hash</div>
+                    <div style="font-family: 'Space Grotesk'; font-size: 0.8rem; color: var(--accent-orange);">XAIP-{{ planet.name[:3]|upper }}-{{ planet.disc_year }}</div>
+                    <div style="margin-top: 10px;">
+                        <a href="/" class="ui-btn">[ RESET_SEARCH ]</a>
+                        <a href="#" class="ui-btn" style="color: var(--accent-orange); border-color: rgba(255, 157, 0, 0.3);" onclick="window.print()">[ EXPORT TO PDF ]</a>
+                    </div>
+                </div>
+            </header>
 
-        <div class="warning">
-            <strong>UPOZORNĚNÍ:</strong> Tato příručka je generována automaticky na základě dostupných astronomických dat. Všechny atmosférické modely jsou pouze odhady. Před vstupem do atmosféry proveďte vlastní měření.
-        </div>
+            <!-- VISUAL PANEL -->
+            <section class="sci-fi-panel visual-panel">
+                <div class="label" style="text-align: center; margin-bottom: 20px;">Visual Reconstruction</div>
+                <div class="planet-visualizer">
+                    <div class="planet-sphere {{ physics.archetype }}"></div>
+                    {% if physics.archetype in ['gas-giant', 'hot-jupiter', 'ice-giant'] %}
+                        <div class="planet-rings" style="display: block;"></div>
+                    {% endif %}
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div class="label">Archetype Classification</div>
+                    <div class="value" style="font-size: 1.1rem; color: var(--accent-orange);">{{ physics.archetype|upper|replace('-', '_') }}</div>
+                </div>
+            </section>
 
-        <section id="gen">
-            <h2>GEN - Obecné informace</h2>
-            <table>
-                <tr>
-                    <th>Název planety</th>
-                    <td>{{ planet.name }}</td>
-                </tr>
-                <tr>
-                    <th>Mateřská hvězda</th>
-                    <td>{{ planet.hostname }}</td>
-                </tr>
-                <tr>
-                    <th>Rok objevu</th>
-                    <td>{{ planet.disc_year }}</td>
-                </tr>
-                <tr>
-                    <th>Vzdálenost hvězdy (teplota)</th>
-                    <td>{{ planet.st_teff }} K</td>
-                </tr>
-                <tr>
-                    <th>Velká poloosa dráhy</th>
-                    <td>{{ planet.semi_major_axis }} AU</td>
-                </tr>
-            </table>
-        </section>
+            <!-- STATS PANEL -->
+            <section class="sci-fi-panel stats-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">Primary Metrics</h3>
+                
+                <div class="data-row">
+                    <div class="label">Mass Index</div>
+                    <div class="value">{{ planet.mass }} <span style="font-size: 0.8rem;">M_EARTH</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Radius Index</div>
+                    <div class="value">{{ planet.radius }} <span style="font-size: 0.8rem;">R_EARTH</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Surface Gravity</div>
+                    <div class="value">{{ physics.gravity_g }} <span style="font-size: 0.8rem;">G</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Thermal Equilibrium</div>
+                    <div class="value">{{ physics.atmosphere.temp_k }} <span style="font-size: 0.8rem;">K</span></div>
+                </div>
+                <div class="data-row" style="border: none;">
+                    <div class="label">Orbital Semi-Major Axis</div>
+                    <div class="value">{{ planet.semi_major_axis }} <span style="font-size: 0.8rem;">AU</span></div>
+                </div>
+            </section>
 
-        <section id="enr">
-            <h2>ENR - Fyzika a atmosféra</h2>
-            <table>
-                <tr>
-                    <th>Hmotnost (Země = 1)</th>
-                    <td>{{ planet.mass }} M<sub>⊕</sub></td>
-                </tr>
-                <tr>
-                    <th>Poloměr (Země = 1)</th>
-                    <td>{{ planet.radius }} R<sub>⊕</sub></td>
-                </tr>
-                <tr>
-                    <th>Povrchová gravitace</th>
-                    <td>{{ physics.gravity_ms2 }} m/s² ({{ physics.gravity_g }} G)</td>
-                </tr>
-                <tr>
-                    <th>Typ atmosféry (odhad)</th>
-                    <td>{{ physics.atmosphere.type }}</td>
-                </tr>
-                <tr>
-                    <th>Průměrná teplota</th>
-                    <td>{{ physics.atmosphere.temp_c }} °C ({{ physics.atmosphere.temp_k }} K)</td>
-                </tr>
-                <tr>
-                    <th>Rychlost zvuku</th>
-                    <td>{{ physics.atmosphere.sound_speed_ms }} m/s ({{ physics.atmosphere.sound_speed_kmh }} km/h)</td>
-                </tr>
-            </table>
-        </section>
-
-        <section id="ad">
-            <h2>AD - Přistávací parametry</h2>
-            <table>
-                <tr>
-                    <th>Referenční tlak (odhad)</th>
-                    <td>{{ physics.atmosphere.pressure_hpa }} hPa</td>
-                </tr>
-                <tr>
-                    <th>Úniková rychlost</th>
-                    <td>{{ physics.v_escape_ms }} m/s ({{ physics.v_escape_kmh }} km/h)</td>
-                </tr>
-                <tr>
-                    <th>Doporučený profil sestupu</th>
-                    <td>
+            <!-- TECH PANEL -->
+            <section class="sci-fi-panel tech-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">Atmospheric Analysis</h3>
+                
+                <div class="data-row">
+                    <div class="label">Composition (Model)</div>
+                    <div class="value" style="font-size: 1.1rem;">{{ physics.atmosphere.type }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Sonic Velocity</div>
+                    <div class="value">{{ physics.atmosphere.sound_speed_kt }} <span style="font-size: 0.8rem;">KT</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Reference Pressure</div>
+                    <div class="value">{{ physics.atmosphere.pressure_hpa }} <span style="font-size: 0.8rem;">HPA</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Local Air Density</div>
+                    <div class="value">{{ physics.atmosphere.density_kgm3 }} <span style="font-size: 0.8rem;">KG/M³</span></div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Drone Stall Speed (Vs)</div>
+                    <div class="value">{{ physics.stall_speed_kt }}{% if physics.stall_speed_kt != "UNABLE TO SUSTAIN FLIGHT" %} <span style="font-size: 0.8rem;">KT</span>{% endif %}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Escape Velocity</div>
+                    <div class="value">{{ physics.v_escape_kt }} <span style="font-size: 0.8rem;">KT</span></div>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 15px; background: rgba(255, 157, 0, 0.1); border-left: 3px solid var(--accent-orange);">
+                    <div class="label" style="color: var(--accent-orange);">Advisory</div>
+                    <div style="font-size: 0.9rem; line-height: 1.3;">
                         {% if physics.gravity_g > 1.5 %}
-                            STEEP - Vysoká gravitace vyžaduje rychlý přechod do aerodynamického brzdění.
+                            STEEP RE-ENTRY PROFILE REQUIRED. High G-load detected.
                         {% elif physics.atmosphere.pressure_hpa < 800 %}
-                            SHALLOW - Řídká atmosféra vyžaduje delší motorické brzdění.
+                            SHALLOW DESCENT MANDATORY. Thin atmosphere risks overheating.
                         {% else %}
-                            STANDARD - Podmínky blízké standardním parametrům.
+                            STANDARD AERONAUTICAL PROCEDURES APPLY.
                         {% endif %}
-                    </td>
-                </tr>
-            </table>
-        </section>
+                    </div>
+                </div>
+            </section>
 
-        <div class="footer">
-            Generováno nástrojem ExoAIP v1.0 | Data source: NASA Exoplanet Archive | Datum: 12.06.2026
+            <!-- BIO-HAZARD PANEL -->
+            <section class="sci-fi-panel bio-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem; color: #ff5555;">Planetary Protection & Bio-Hazard</h3>
+                
+                <div class="data-row">
+                    <div class="label">Biological Threat Level</div>
+                    <div class="value" style="color: #ff5555;">{{ bio.level }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Quarantine Protocol</div>
+                    <div style="font-size: 1rem; line-height: 1.4; color: #e0e0e0;">{{ bio.quarantine }}</div>
+                </div>
+                <div class="data-row" style="border: none;">
+                    <div class="label">Life Support Requirement</div>
+                    <div class="value" style="font-size: 1.1rem; color: #ff9d00;">{{ bio.life_support }}</div>
+                </div>
+            </section>
+
+            <!-- VAC PANEL -->
+            <section class="sci-fi-panel vac-panel" 
+                     id="radar-container"
+                     data-stall-speed="{{ physics.stall_speed_kt }}"
+                     data-sound-speed="{{ physics.atmosphere.sound_speed_kt }}"
+                     data-bio-hazard="{{ bio.level }}"
+                     data-blackout-sec="{{ blackout_sec }}"
+                     data-heightmap='{{ heightmap | tojson }}'>
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">Visual Approach Chart (VAC) & ExoATC Radar [3D_WIRE_SCAN]</h3>
+                <div class="vac-map-wrapper" id="radar-3d-container" style="position: relative; height: 400px; background: #000;">
+                    <!-- Three.js will render here -->
+                    <div id="radar-overlay-ui" style="position: absolute; top: 10px; left: 10px; pointer-events: none;">
+                        <div class="label" id="radar-status" style="color: #00ff00;">SCANNING...</div>
+                    </div>
+                </div>
+                <div class="label" style="text-align: center; margin-top: 10px;">Scale: 1:5,000,000 // Mode: Holographic Tactical Display</div>
+            </section>
+
+            <!-- VOLMET PANEL -->
+            <section class="sci-fi-panel volmet-panel">
+                <div class="transcript-header">
+                    <span class="tx-indicator">● TX</span>
+                    <span>METEOROLOGICAL BROADCAST (VOLMET) // LIVE FEED</span>
+                </div>
+                <div class="volmet-ticker-container">
+                    <div class="volmet-ticker-text" id="volmet-ticker">
+                        {{ volmet }} &nbsp;&nbsp; ● &nbsp;&nbsp; {{ volmet }}
+                    </div>
+                </div>
+                <div class="metar-taf-block">
+                    <div class="label" style="padding: 10px 15px 0 15px;">ENCODED WEATHER REPORTS (METAR/TAF)</div>
+                    <pre class="metar-text">{{ metar }}\n{{ taf }}</pre>
+                </div>
+            </section>
+
+            <!-- RE-ENTRY PANEL -->
+            <section class="sci-fi-panel reentry-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem; color: var(--accent-orange);">Atmospheric Re-entry Profile</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="label">Entry Angle Corridor</div>
+                        <div class="value">{{ reentry.angle_range }}</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="label">Thermal Load Factor</div>
+                        <div class="value" style="color: {% if reentry.thermal_load == 'CRITICAL' %}#ff5555{% else %}var(--accent-orange){% endif %};">{{ reentry.thermal_load }}</div>
+                    </div>
+                </div>
+                <div class="warning-box" style="margin-top: 15px; margin-bottom: 0;">
+                    <strong>DYNAMICS ADVISORY:</strong> {{ reentry.hazard_warning }}
+                </div>
+            </section>
+
+            <!-- SPACE WEATHER PANEL -->
+            <section class="sci-fi-panel space-weather-panel" id="space-weather-box" data-status="{{ space_weather.status }}">
+                <h3 style="margin-bottom: 15px; font-size: 1rem; color: {% if space_weather.risk == 'CRITICAL' %}#ff5555{% else %}var(--accent-cyan){% endif %};">Space Weather Advisory</h3>
+                <div class="data-row">
+                    <div class="label">Stellar Activity Risk</div>
+                    <div class="value" style="color: {% if space_weather.risk == 'CRITICAL' %}#ff5555{% else %}var(--accent-cyan){% endif %};">{{ space_weather.risk }}</div>
+                </div>
+                <div class="terminal-text" style="font-size: 0.9rem; color: #fff;">{{ space_weather.advisory }}</div>
+            </section>
+
+            <!-- NAVLOG PANEL -->
+            <section class="sci-fi-panel nav-panel" id="navlog-box">
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">PulseWay RNAV // Pulsar Triangulation</h3>
+                <div class="nav-grid">
+                    <div class="pulsar-list">
+                        {% for pulsar in nav.pulsars %}
+                        <div class="pulsar-item">
+                            <div class="label">{{ pulsar.id }}</div>
+                            <div style="font-size: 0.8rem;">FREQ: {{ pulsar.freq }} | SNR: <span class="snr-val">{{ pulsar.snr }}</span></div>
+                        </div>
+                        {% endfor %}
+                        <div class="nav-status" style="margin-top: 10px; font-weight: bold; color: {% if nav.status == 'FIX VALID' %}#00ff00{% else %}#ff5555{% endif %};">STATUS: {{ nav.status }}</div>
+                    </div>
+                    <div class="nav-data-item">
+                        <div class="label">Destination</div>
+                        <div class="value" style="font-size: 1.1rem;">{{ nav.log.destination }}</div>
+                        <div class="grid-2col" style="margin-top: 10px;">
+                            <div><div class="label">Track</div><div class="value">{{ nav.log.track }}</div></div>
+                            <div><div class="label">Heading</div><div class="value">{{ nav.log.heading }}</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BIOSPHERE PANEL -->
+            <section class="sci-fi-panel biosphere-panel">
+                <details>
+                    <summary class="label" style="cursor: pointer; color: var(--accent-cyan); font-size: 1rem;">[+] EXTRATERRESTRICA: BIOSPHERE ANALYSIS REPORT</summary>
+                    <div class="biosphere-content" style="margin-top: 20px; border-left: 2px solid var(--accent-cyan); padding-left: 20px;">
+                        <div class="label" style="margin-bottom: 10px;">Hypothetical Ecosystem Model</div>
+                        <div class="terminal-text" style="line-height: 1.6; font-size: 0.95rem;">{{ bio.biosphere_report }}</div>
+                        <div class="label" style="margin-top: 20px;">Mission Advisory</div>
+                        <div style="font-size: 0.9rem; color: #ff9d00;">SURFACE SAMPLING REQUIRES BIOLOGICAL CONTAINMENT LEVEL 4.</div>
+                    </div>
+                </details>
+            </section>
+
+            <!-- LOADSHEET PANEL -->
+            <section class="sci-fi-panel loadsheet-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">ICAO Load & Balance Manifest</h3>
+                <table class="loadsheet-table">
+                    <tr><td class="label">Dry Operating Weight</td><td class="value">{{ loadsheet.dow }} KG</td></tr>
+                    <tr><td class="label">Fuel On Board</td><td class="value">{{ loadsheet.fuel }} KG</td></tr>
+                    <tr><td class="label">Science Payload</td><td class="value">{{ loadsheet.payload }} KG</td></tr>
+                    <tr class="total-row"><td class="label">Total Landing Mass</td><td class="value">{{ loadsheet.total_mass }} KG</td></tr>
+                    <tr class="weight-row">
+                        <td class="label">Local Surface Weight</td>
+                        <td class="value" style="color: {% if loadsheet.limit_exceeded %}#ff5555{% else %}#00ff00{% endif %};">{{ loadsheet.local_weight_kn }} KN</td>
+                    </tr>
+                </table>
+                <div class="nav-status" style="margin-top: 15px; font-size: 0.8rem; color: {% if loadsheet.limit_exceeded %}#ff5555{% else %}var(--accent-cyan){% endif %};">
+                    {{ loadsheet.status }} (LIMIT: {{ loadsheet.limit_kn }} KN)
+                </div>
+            </section>
+
+            <!-- SAR PANEL -->
+            <section class="sci-fi-panel sar-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem; color: #ff5555;">SAR-26 // Emergency Protocol</h3>
+                <div class="grid-2col">
+                    <div class="data-item">
+                        <div class="label">Time of Useful Consciousness</div>
+                        <div class="value" style="color: #ff5555;">{{ sar.tuc_min }} MIN</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="label">Primary Search Pattern</div>
+                        <div class="value">{{ sar.pattern }}</div>
+                    </div>
+                </div>
+                <div class="terminal-text" style="color: #ff5555; margin-top: 15px; font-size: 0.85rem; border: 1px dashed #ff5555; padding: 10px;">
+                    {{ sar.advisory }} // GRID: {{ sar.grid_id }}
+                </div>
+            </section>
+
+            <!-- FPL PANEL -->
+            <section class="sci-fi-panel fpl-panel">
+                <h3 style="margin-bottom: 20px; font-size: 1rem;">Exo-FPL // Mission Flight Plan</h3>
+                {% if is_locked %}
+                <div class="warning-box" style="color: #ff5555; border-color: #ff5555; margin-bottom: 15px;">
+                    CRITICAL: PLANET IS TIDALLY LOCKED. DIRECT COMMS LINK IMPOSSIBLE ON NIGHTSIDE.
+                </div>
+                {% endif %}
+                <form id="fpl-form" class="fpl-grid">
+                    <div class="fpl-input-group">
+                        <label class="label">Vessel Mass (kg)</label>
+                        <input type="number" id="fpl-mass" value="1500" class="fpl-input">
+                    </div>
+                    <div class="fpl-input-group">
+                        <label class="label">Total Delta-V (m/s)</label>
+                        <input type="number" id="fpl-dv" value="12000" class="fpl-input">
+                    </div>
+                    <div class="fpl-input-group">
+                        <label class="label">Relay Satellite</label>
+                        <div style="display: flex; align-items: center; height: 100%;">
+                            <input type="checkbox" id="fpl-relay" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span class="label" style="margin-left: 10px;">DEPLOY RELAY (+500 KG)</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="ui-btn" style="margin: 0; width: 100%; height: 45px; grid-column: span 3;">[ FILE_FLIGHT_PLAN ]</button>
+                </form>
+                <div id="fpl-response" class="fpl-response-box" style="display: none;">
+                    <div class="label" id="fpl-status-label">STATUS: PROCESSING...</div>
+                    <div id="fpl-reason" style="font-family: 'Courier New'; margin-top: 5px;"></div>
+                </div>
+            </section>
+
+            <!-- STERILIZATION PANEL -->
+            {% if sterilization %}
+            <section class="sci-fi-panel bio-panel" id="sterilization-box">
+                <h3 style="margin-bottom: 20px; font-size: 1rem; color: #ff5555;">Planetary Protection: Sterilization Protocol</h3>
+                <div class="checklist-container">
+                    {% for item in sterilization %}
+                    <div class="checklist-item">
+                        <input type="checkbox" class="sterile-check">
+                        <div style="margin-left: 15px;">
+                            <div class="label" style="color: #ff5555;">{{ item.id }}: {{ item.task }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-dim);">{{ item.desc }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="nav-status" id="sterile-status" style="margin-top: 15px; color: #ff5555;">DEPARTURE BLOCKED: STERILIZATION INCOMPLETE</div>
+            </section>
+            {% endif %}
+
+            <!-- TRANSCRIPT PANEL -->
+            <section class="sci-fi-panel transcript-panel" id="transcript-container">
+                <div class="transcript-header">
+                    <span>RADIO TRANSCRIPT // INTERSTELLAR LINK</span>
+                    <span style="float: right; color: var(--accent-cyan);">SIGNAL DELAY: {{ physics.signal_delay }}</span>
+                </div>
+                <div class="transcript-body" id="transcript-body">
+                    <!-- Messages will be typed here -->
+                </div>
+                <div id="raw-transcript" style="display: none;">
+                    {% for msg in transcript %}
+                        <p>{{ msg }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- NOTAM PANEL -->
+            <section class="notam-container">
+                <div class="notam-header">
+                    <span>ICAO NOTAM // PRIORITY: HIGH</span>
+                    <span style="float: right;">{{ planet.name.upper() }} / AD</span>
+                </div>
+                <div class="notam-body">
+                    {{ physics.notam }}
+                </div>
+            </section>
+
         </div>
+
+        <footer style="margin-top: 40px; padding: 20px; border-top: 1px solid var(--border-dim); display: flex; justify-content: space-between;">
+            <div class="label">ExoAIP Interface v2.0 // NASA EXOPLANET ARCHIVE DATASET</div>
+            <div class="label">Authorization: INTERSTELLAR FEDERATION [NAV-DPT]</div>
+        </footer>
     </div>
+    <script src="{{ url_for('static', filename='radar_sim.js') }}"></script>
 </body>
 </html>

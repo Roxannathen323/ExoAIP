@@ -45,7 +45,9 @@ class ExoFetcher:
                 'temp_eq': res['pl_eqt'][0],      # Rovnovážná teplota [K]
                 'st_teff': res['st_teff'][0],     # Efektivní teplota hvězdy [K]
                 'semi_major_axis': res['pl_orbsmax'][0], # Velká poloosa [AU]
-                'disc_year': res['disc_year'][0]  # Rok objevu
+                'disc_year': res['disc_year'][0],  # Rok objevu
+                'distance': res['sy_dist'][0],      # Vzdálenost v parsecích
+                'st_spectype': res['st_spectype'][0] # Star spectral type
             }
             
             # Kontrola kritických dat

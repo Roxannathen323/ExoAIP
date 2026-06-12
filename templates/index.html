@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoAIP - Terminal v2.0</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="terminal-loader">INITIALIZING INTERSTELLAR CONNECTION...</div>
+    </div>
+
+    <section class="hero">
+        <div class="label" style="letter-spacing: 5px; margin-bottom: 10px;">Deep Space Exploration Database</div>
+        <h1>ExoAIP</h1>
+        
+        <div class="search-box-wrapper">
+            <form id="search-form">
+                <input type="text" id="planet-search" class="search-input" placeholder="ENTER PLANET NAME..." autocomplete="off" autofocus>
+                <div id="autocomplete-list" class="autocomplete-list"></div>
+            </form>
+            <div class="label" style="margin-top: 15px; font-size: 0.7rem;">System Status: <span style="color: var(--accent-cyan);">Online</span> | Records: <span id="record-count">6000+</span></div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
