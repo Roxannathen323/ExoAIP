@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIP - Kepler-186 f</title>
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #f5f5f5;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 2.5em;
+            text-transform: uppercase;
+        }
+        .aip-label {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            background: var(--accent-color);
+            padding: 10px;
+            border-left: 5px solid var(--secondary-color);
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            width: 40%;
+            background-color: #fafafa;
+            color: #666;
+            font-weight: 600;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #888;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Kepler-186 f</h1>
+                <p>Interstellar Aeronautical Information Publication</p>
+            </div>
+            <div class="aip-label">AIP EXOPLANET</div>
+        </header>
+
+        <div class="warning">
+            <strong>UPOZORNĚNÍ:</strong> Tato příručka je generována automaticky na základě dostupných astronomických dat. Všechny atmosférické modely jsou pouze odhady. Před vstupem do atmosféry proveďte vlastní měření.
+        </div>
+
+        <section id="gen">
+            <h2>GEN - Obecné informace</h2>
+            <table>
+                <tr>
+                    <th>Název planety</th>
+                    <td>Kepler-186 f</td>
+                </tr>
+                <tr>
+                    <th>Mateřská hvězda</th>
+                    <td>Kepler-186</td>
+                </tr>
+                <tr>
+                    <th>Rok objevu</th>
+                    <td>2014</td>
+                </tr>
+                <tr>
+                    <th>Vzdálenost hvězdy (teplota)</th>
+                    <td>3755.0 K K</td>
+                </tr>
+                <tr>
+                    <th>Velká poloosa dráhy</th>
+                    <td>0.432 AU</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="enr">
+            <h2>ENR - Fyzika a atmosféra</h2>
+            <table>
+                <tr>
+                    <th>Hmotnost (Země = 1)</th>
+                    <td>1.71 earthMass M<sub>⊕</sub></td>
+                </tr>
+                <tr>
+                    <th>Poloměr (Země = 1)</th>
+                    <td>1.17 earthRad R<sub>⊕</sub></td>
+                </tr>
+                <tr>
+                    <th>Povrchová gravitace</th>
+                    <td>12.27 m/s² (1.25 G)</td>
+                </tr>
+                <tr>
+                    <th>Typ atmosféry (odhad)</th>
+                    <td>Oxid uhličitý (CO2) - Extrémní / Neznámá</td>
+                </tr>
+                <tr>
+                    <th>Průměrná teplota</th>
+                    <td>-96.1 °C (177.0 K)</td>
+                </tr>
+                <tr>
+                    <th>Rychlost zvuku</th>
+                    <td>206.88 m/s (744.77 km/h)</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="ad">
+            <h2>AD - Přistávací parametry</h2>
+            <table>
+                <tr>
+                    <th>Referenční tlak (odhad)</th>
+                    <td>500.0 hPa</td>
+                </tr>
+                <tr>
+                    <th>Úniková rychlost</th>
+                    <td>13523.19 m/s (48683.48 km/h)</td>
+                </tr>
+                <tr>
+                    <th>Doporučený profil sestupu</th>
+                    <td>
+                        
+                            SHALLOW - Řídká atmosféra vyžaduje delší motorické brzdění.
+                        
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="footer">
+            Generováno nástrojem ExoAIP v1.0 | Data source: NASA Exoplanet Archive | Datum: 12.06.2026
+        </div>
+    </div>
+</body>
+</html>
